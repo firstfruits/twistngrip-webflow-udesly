@@ -1,0 +1,2473 @@
+backend:
+  name: git-gateway
+  accept_roles:
+    - admin
+    - editor
+  branch: master
+media_folder: theme/assets/images
+public_folder: /assets/images
+collections:
+  - name: pages
+    label: Pages
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    folder: cms/pages
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '{{slug}}.html'
+      - &ref_0
+        label: Seo
+        name: seo
+        widget: object
+        collapsed: true
+        fields:
+          - label: Title
+            name: title
+            widget: string
+            required: false
+          - label: Description
+            name: description
+            widget: string
+            required: false
+          - label: No index
+            name: noindex
+            widget: boolean
+            default: false
+            required: false
+          - label: Open Graph Title
+            name: og:title
+            widget: string
+            required: false
+          - label: Open Graph Image
+            name: og:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Twitter Title
+            name: twitter:title
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Card
+            name: twitter:card
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Site
+            name: twitter:site
+            widget: string
+            required: false
+          - label: Twitter Creator
+            name: twitter:creator
+            widget: string
+            required: false
+          - label: Twitter Image
+            name: twitter:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Additional HTML tags
+            name: additional_tags
+            widget: text
+            required: false
+  - name: site_content
+    label: Site Contents
+    folder: cms/site-content
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: Enter Name
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - label: About Section
+        name: body
+        widget: markdown
+        required: false
+      - hint: Enter the name of this website
+        name: f_site-title-h1
+        label: Site Title H1
+        widget: string
+        required: false
+      - hint: Enter the tagline for this website
+        name: f_site-tagline
+        label: Site Tagline
+        widget: string
+        required: false
+      - hint: Enter the value proposition for your products or service
+        name: f_value-proposition
+        label: Value Proposition
+        widget: string
+        required: false
+      - hint: Add or edit product special description
+        name: f_special
+        label: Special
+        widget: string
+        required: false
+      - hint: Add or edit information next to the contact form
+        name: f_message-and-special-orders-text
+        label: Message and special orders text
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f__noSearch
+        label: No Search
+        widget: boolean
+        required: false
+        default: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: site-content
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[site-content].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - name: project
+    label: Projects
+    folder: cms/project
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - label: Project Details
+        name: body
+        widget: markdown
+        required: false
+      - hint: Used on project list grid
+        name: f_main-project-image
+        label: Main Project Image
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_project-summary
+        label: Project Summary
+        widget: text
+        required: false
+      - hint: ''
+        name: f_client
+        label: Client
+        widget: string
+        required: false
+      - hint: ''
+        name: f_client-logo
+        label: Client Logo
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_services-rendered
+        label: Services Rendered
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f_color
+        label: Color
+        widget: color
+        required: false
+        enableAlpha: true
+        allowInput: true
+      - hint: ''
+        name: f__noSearch
+        label: No Search
+        widget: boolean
+        required: false
+        default: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: project
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[project].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - label: Theme Settings
+    name: settings
+    identifier_field: title
+    extension: json
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    files:
+      - label: General
+        name: site
+        file: cms/_data/settings/site.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: General
+          - hint: Full domain url (needed for a correct sitemap file)
+            name: domain
+            label: Domain
+            widget: string
+            required: false
+          - name: favicon
+            label: Favicon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: apple_touch_icon
+            label: Apple Touch Icon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: header_additional_content
+            label: Additional Content Header
+            hint: Content here will be placed before </head> tag
+            widget: text
+            required: false
+          - name: footer_additional_content
+            label: Additional Content Footer
+            hint: Content here will be placed before </body> tag
+            widget: text
+            required: false
+          - name: images_optimization
+            label: Images Optimization
+            widget: object
+            collapsed: false
+            fields:
+              - label: Image Formats
+                name: formats
+                widget: select
+                multiple: true
+                options:
+                  - label: Avif
+                    value: avif
+                  - label: Webp
+                    value: webp
+              - label: Image Dimensions
+                name: dimensions
+                widget: select
+                multiple: true
+                options:
+                  - label: '500'
+                    value: 500
+                  - label: '800'
+                    value: 800
+                  - label: '1080'
+                    value: 1080
+                  - label: '1600'
+                    value: 1600
+                  - label: '2000'
+                    value: 2000
+                  - label: '2600'
+                    value: 2600
+      - label: Colors
+        name: colors
+        file: cms/_data/colors.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Colors
+      - label: Texts
+        name: texts
+        file: cms/_data/texts.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Texts
+          - hint: |-
+              Original text: window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-876CSYR3QC');
+                , key: -3035445a
+            label: Text
+            name: '-3035445a'
+            widget: text
+          - hint: 'Original text: Twist-n-Grip Peg, key: 59580449'
+            label: Text
+            name: '59580449'
+            widget: string
+          - hint: >-
+              Original text: A Tough Ground Anchoring Earth Screw, key:
+              -6aaf810a
+            label: Text
+            name: '-6aaf810a'
+            widget: string
+          - hint: >-
+              Original text: Easy to screw in and holds greater loads than
+              similar-sized pegs!!, key: -645d2c77
+            label: Text
+            name: '-645d2c77'
+            widget: string
+          - hint: 'Original text: Buy Pegs, key: -3a5620c5'
+            label: Text
+            name: '-3a5620c5'
+            widget: string
+          - hint: 'Original text: Call Me, key: -7c14e566'
+            label: Text
+            name: '-7c14e566'
+            widget: string
+          - hint: 'Original text: FREE SHIPPING FOR ORDERS OVER $45, key: -702ac681'
+            label: Text
+            name: '-702ac681'
+            widget: string
+          - hint: 'Original text: About the (, key: 4b45adc6'
+            label: Text
+            name: 4b45adc6
+            widget: string
+          - hint: 'Original text: EarthScrew) Peg, key: 75b1ac71'
+            label: Text
+            name: 75b1ac71
+            widget: string
+          - hint: 'Original text: The , key: 27c1ef'
+            label: Text
+            name: 27c1ef
+            widget: string
+          - hint: 'Original text: EarthScrew, key: -97545b6'
+            label: Text
+            name: '-97545b6'
+            widget: string
+          - hint: >-
+              Original text:  peg is a non-corrosive, tough, super strong and
+              easy to use screw in tent peg with many uses. As tent pegs for
+              camping and other outdoor activities. You can use them in the
+              garden or on the sports field or worksite to hold down the guy
+              ropes of awnings and other coverings. Designed to simply screw
+              into the earth using the hand tool or a 3/8″ drive adaptor in a
+              wrench or battery drill. So simple, no more hammering and ending
+              up with bent or broken pegs! , key: -4f18fd8d
+            label: Text
+            name: '-4f18fd8d'
+            widget: text
+          - hint: >-
+              Original text: The Twist-n-Grip peworks like a regular screw which
+              is why we nickname it an , key: 1551f03e
+            label: Text
+            name: 1551f03e
+            widget: string
+          - hint: >-
+              Original text: ! It is simply screwed in and out of the earth
+              giving you a good secure anchorage point. Use it to hold down
+              tents, bivouacs, shade coverings, awnings, canopies or gazebos.
+              Tie down the trampoline, furniture, pet cage and so many other
+              items. In the garden, use it for young shrub tie downs, secure
+              growing tunnels or pinning weed mat and soil erosion materials it
+              has so many uses. Removal is as easy as insertion, just unscrew
+              it, no more pulling and straining required, simple and easy., key:
+              3f8d4962
+            label: Text
+            name: 3f8d4962
+            widget: text
+          - hint: 'Original text: Designed in New Zealand, key: -24663037'
+            label: Text
+            name: '-24663037'
+            widget: string
+          - hint: >-
+              Original text: The head of these tough, heavy duty earth screws
+              (Made in New Zealand Tent Pegs) are designed for a 4mm guy rope to
+              be easily clipped into place for a secure fastening. They can be
+              easily removed without heavy pulling and, when required, the peg
+              can be left permanently in place as they won't corrode like steel
+              tent pegs. The guy rope is set closer to the pole or side of tent
+              thus reducing any trip hazard. These heavy duty screw in pegs are
+              designed to be easy to use, screw in and has less ground
+              disturbance on withdrawal. Wind resistance is 35kg making it a
+              stronger anchoring peg than the equivalent ‘knock in’ peg. Tote
+              bags, also made in NZ are available, each tote bag can hold up to
+              six screw in pegs and a NZ made hand tool to make a tent peg set.
+              Tote bags work with a drawstring and are lightweight unlike
+              leather tote bags., key: -71d864e5
+            label: Text
+            name: '-71d864e5'
+            widget: text
+          - hint: 'Original text: Manufactured in New Zealand, key: 248ea23'
+            label: Text
+            name: 248ea23
+            widget: string
+          - hint: >-
+              Original text: Manufactured in New Zealand, since 2003, from ,
+              key: 886cf04
+            label: Text
+            name: 886cf04
+            widget: string
+          - hint: 'Original text: Acetal, key: 748dc05c'
+            label: Text
+            name: 748dc05c
+            widget: string
+          - hint: >-
+              Original text:  (poloxymethylene or POM) which is a high strength,
+              low friction engineering plastic having excellent properties for
+              wet and dry environments. Flexible and strong with excellent
+              diversional stability. The pointed tip of the peg helps to pull
+              the peg in as you screw it in and out with little earth
+              disturbance., key: 14b67ad0
+            label: Text
+            name: 14b67ad0
+            widget: text
+          - hint: 'Original text: Size, key: 275421'
+            label: Text
+            name: '275421'
+            widget: string
+          - hint: >-
+              Original text: Overall length 175mm; the tapered shaft length is
+              154mm x 20mm tapering to 10mm. Head diameter: 45mm., key: 71d4ccdd
+            label: Text
+            name: 71d4ccdd
+            widget: text
+          - hint: >-
+              Original text: Call Stephen at Twist-n-Grip 027 276 2028, key:
+              -55521ea9
+            label: Text
+            name: '-55521ea9'
+            widget: string
+          - hint: 'Original text: Message and Special Orders, key: 6c4a66ae'
+            label: Text
+            name: 6c4a66ae
+            widget: string
+          - hint: >-
+              Original text: Use the form to place an order without using the
+              shopping cart or to send me a message. Feel free to call Stephen
+              on , key: 2746bd73
+            label: Text
+            name: 2746bd73
+            widget: text
+          - hint: 'Original text: 027 276 2028, key: -703f5182'
+            label: Text
+            name: '-703f5182'
+            widget: string
+          - hint: 'Original text:  if you need more information. , key: -58ccf747'
+            label: Text
+            name: '-58ccf747'
+            widget: string
+          - hint: >-
+              Original text: Bulk orders of 50 or more welcome. To get the ,
+              key: 5cd4b9e1
+            label: Text
+            name: 5cd4b9e1
+            widget: string
+          - hint: >-
+              Original text: special price for New Zealand Motor Caravan
+              Association (, key: 27096ba0
+            label: Text
+            name: 27096ba0
+            widget: string
+          - hint: 'Original text: NZMCA, key: 4753c1f'
+            label: Text
+            name: 4753c1f
+            widget: string
+          - hint: 'Original text: ) , key: 517'
+            label: Text
+            name: '517'
+            widget: string
+          - hint: >-
+              Original text: please include your membership number in the
+              message field of the form.
+                      , key: 1324c87b
+            label: Text
+            name: 1324c87b
+            widget: string
+          - hint: 'Original text: Form Label, key: 1905e898'
+            label: Text
+            name: '1905e898'
+            widget: string
+          - hint: >-
+              Original text: Thank you! Your submission has been received!, key:
+              5a0ea5a1
+            label: Text
+            name: 5a0ea5a1
+            widget: string
+          - hint: >-
+              Original text: Oops! Something went wrong while submitting the
+              form., key: -7c112e99
+            label: Text
+            name: '-7c112e99'
+            widget: string
+          - hint: 'Original text: Terms and Conditions, key: -7ac7b766'
+            label: Text
+            name: '-7ac7b766'
+            widget: string
+          - hint: 'Original text: Website by Firstfruits, key: -6abd6295'
+            label: Text
+            name: '-6abd6295'
+            widget: string
+          - hint: 'Original text: By clicking , key: 6ffc699d'
+            label: Text
+            name: 6ffc699d
+            widget: string
+          - hint: 'Original text: “Accept All Cookies”, key: -4a55ca57'
+            label: Text
+            name: '-4a55ca57'
+            widget: string
+          - hint: >-
+              Original text: , you agree to the storing of cookies on your
+              device to enhance site navigation, analyze site usage, and assist
+              in our marketing efforts. View our, key: 1b9e8904
+            label: Text
+            name: 1b9e8904
+            widget: text
+          - hint: 'Original text:  Privacy Policy, key: -4509ed6'
+            label: Text
+            name: '-4509ed6'
+            widget: string
+          - hint: 'Original text:  for more information., key: -466d844a'
+            label: Text
+            name: '-466d844a'
+            widget: string
+          - hint: 'Original text: Preferences, key: -25fb7928'
+            label: Text
+            name: '-25fb7928'
+            widget: string
+          - hint: 'Original text: Deny, key: 20722c'
+            label: Text
+            name: 20722c
+            widget: string
+          - hint: 'Original text: Accept, key: 748ca128'
+            label: Text
+            name: 748ca128
+            widget: string
+          - hint: 'Original text: Privacy Preference Center, key: -292e837e'
+            label: Text
+            name: '-292e837e'
+            widget: string
+          - hint: >-
+              Original text: When you visit websites, they may store or retrieve
+              data in your browser. This storage is often necessary for the
+              basic functionality of the website. The storage may be used for
+              marketing, analytics, and personalization of the site, such as
+              storing your preferences. Privacy is important to us, so you have
+              the option of disabling certain types of storage that may not be
+              necessary for the basic functioning of the website. Blocking
+              categories may impact your experience on the website., key:
+              6b30dde0
+            label: Text
+            name: 6b30dde0
+            widget: text
+          - hint: 'Original text: Reject all cookies, key: 41778c2f'
+            label: Text
+            name: 41778c2f
+            widget: string
+          - hint: 'Original text: Allow all cookies, key: -7313ef67'
+            label: Text
+            name: '-7313ef67'
+            widget: string
+          - hint: >-
+              Original text: Manage Consent Preferences by Category, key:
+              2bfb2cbe
+            label: Text
+            name: 2bfb2cbe
+            widget: string
+          - hint: 'Original text: Essential, key: 16a3932e'
+            label: Text
+            name: 16a3932e
+            widget: string
+          - hint: 'Original text: Always Active, key: 6434d237'
+            label: Text
+            name: 6434d237
+            widget: string
+          - hint: >-
+              Original text: These items are required to enable basic website
+              functionality., key: -3ecddb96
+            label: Text
+            name: '-3ecddb96'
+            widget: string
+          - hint: 'Original text: Marketing, key: 3fc9ea06'
+            label: Text
+            name: 3fc9ea06
+            widget: string
+          - hint: >-
+              Original text: These items are used to deliver advertising that is
+              more relevant to you and your interests. They may also be used to
+              limit the number of times you see an advertisement and measure the
+              effectiveness of advertising campaigns. Advertising networks
+              usually place them with the website operator’s permission., key:
+              6994ab7
+            label: Text
+            name: 6994ab7
+            widget: text
+          - hint: 'Original text: Personalization, key: -13f831fc'
+            label: Text
+            name: '-13f831fc'
+            widget: string
+          - hint: >-
+              Original text: These items allow the website to remember choices
+              you make (such as your user name, language, or the region you are
+              in) and provide enhanced, more personal features. For example, a
+              website may provide you with local weather reports or traffic news
+              by storing data about your current location., key: -3d6925b8
+            label: Text
+            name: '-3d6925b8'
+            widget: text
+          - hint: 'Original text: Analytics, key: 1288bb66'
+            label: Text
+            name: 1288bb66
+            widget: string
+          - hint: >-
+              Original text: These items help the website operator understand
+              how its website performs, how visitors interact with the site, and
+              whether there may be technical issues. This storage type usually
+              doesn’t collect information that identifies a visitor., key:
+              398471b1
+            label: Text
+            name: 398471b1
+            widget: text
+          - hint: 'Original text: Confirm my preferences and close, key: -717776ad'
+            label: Text
+            name: '-717776ad'
+            widget: string
+          - hint: 'Original text: No items found., key: 3d503d2b'
+            label: Text
+            name: 3d503d2b
+            widget: string
+          - hint: 'Original text: Page Not Found, key: -40b0787c'
+            label: Text
+            name: '-40b0787c'
+            widget: string
+          - hint: >-
+              Original text: The page you are looking for doesn't exist or has
+              been moved, key: 556d64d8
+            label: Text
+            name: 556d64d8
+            widget: string
+          - hint: 'Original text: Goto Homepage, key: 4f50a20b'
+            label: Text
+            name: 4f50a20b
+            widget: string
+          - hint: 'Original text: ← back, key: 47974d77'
+            label: Text
+            name: 47974d77
+            widget: string
+          - hint: 'Original text: Such A Lovely Popup, key: -413ca1dd'
+            label: Text
+            name: '-413ca1dd'
+            widget: string
+          - hint: 'Original text: Close Popup, key: 14b5c044'
+            label: Text
+            name: 14b5c044
+            widget: string
+          - hint: 'Original text: Typography, key: 5500514f'
+            label: Text
+            name: 5500514f
+            widget: string
+          - hint: >-
+              Original text: You'll see that these typography elements don't
+              have classes. That's because on this page, we want to edit the
+              styles after selecting "All H1 Headings" for example, so that it
+              will effect all the elements on the site. To do this, select the
+              H1 below, click where it says "Select a Class or Tag" and select
+              "All H1 Headings" at the bottom of the list., key: -1c35cfad
+            label: Text
+            name: '-1c35cfad'
+            widget: text
+          - hint: >-
+              Original text: If you edit styles here, they will change across
+              the site, key: 15301c6d
+            label: Text
+            name: 15301c6d
+            widget: string
+          - hint: 'Original text: H1, key: 8e9'
+            label: Text
+            name: '8e9'
+            widget: string
+          - hint: 'Original text: Lorem ipsum dolor sit amet, key: -734fd222'
+            label: Text
+            name: '-734fd222'
+            widget: string
+          - hint: 'Original text: H2, key: 8ea'
+            label: Text
+            name: 8ea
+            widget: string
+          - hint: 'Original text: H3, key: 8eb'
+            label: Text
+            name: 8eb
+            widget: string
+          - hint: 'Original text: H4, key: 8ec'
+            label: Text
+            name: 8ec
+            widget: string
+          - hint: 'Original text: H5, key: 8ed'
+            label: Text
+            name: 8ed
+            widget: string
+          - hint: 'Original text: H6, key: 8ee'
+            label: Text
+            name: 8ee
+            widget: string
+          - hint: >-
+              Original text: Lorem ipsum dolor sit amet, consectetur adipiscing
+              elit. Suspendisse varius enim in eros elementum tristique. Duis
+              cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
+              commodo diam libero vitae erat., key: -3910d286
+            label: Text
+            name: '-3910d286'
+            widget: text
+          - hint: 'Original text: Paragraph, key: -145e16b2'
+            label: Text
+            name: '-145e16b2'
+            widget: string
+          - hint: 'Original text: Block Quote, key: 3f3470e9'
+            label: Text
+            name: 3f3470e9
+            widget: string
+          - hint: 'Original text: Lorem ipsum, key: -1b542585'
+            label: Text
+            name: '-1b542585'
+            widget: string
+          - hint: 'Original text: Text Link, key: 3610230d'
+            label: Text
+            name: 3610230d
+            widget: string
+          - hint: 'Original text: View Project, key: 4132989e'
+            label: Text
+            name: 4132989e
+            widget: string
+          - hint: 'Original text: Button, key: 77471352'
+            label: Text
+            name: '77471352'
+            widget: string
+          - hint: 'Original text: Ghost Button, key: 4bda3623'
+            label: Text
+            name: 4bda3623
+            widget: string
+          - hint: 'Original text: Text Link - Inverted, key: 4ce2709b'
+            label: Text
+            name: 4ce2709b
+            widget: string
+          - hint: 'Original text: Button - Inverted, key: -1428ecca'
+            label: Text
+            name: '-1428ecca'
+            widget: string
+          - hint: 'Original text: Ghost Button - Inverted, key: 6d62b3c5'
+            label: Text
+            name: 6d62b3c5
+            widget: string
+          - hint: 'Original text: Color, key: 3e43f43'
+            label: Text
+            name: 3e43f43
+            widget: string
+          - hint: >-
+              Original text: These colors have been created using Global
+              Swatches. If you edit the Global Swatch color, it will change
+              every element that uses that color swatch., key: -1e5986a2
+            label: Text
+            name: '-1e5986a2'
+            widget: text
+          - hint: 'Original text: Text colors, key: 1a26cba3'
+            label: Text
+            name: 1a26cba3
+            widget: string
+          - hint: 'Original text: font color - dark, key: -399cdce9'
+            label: Text
+            name: '-399cdce9'
+            widget: string
+          - hint: 'Original text: #222222, key: -6c5b835d'
+            label: Text
+            name: '-6c5b835d'
+            widget: string
+          - hint: 'Original text: #aaaaaa, key: -197b59bd'
+            label: Text
+            name: '-197b59bd'
+            widget: string
+          - hint: 'Original text: Main colors, key: 17769597'
+            label: Text
+            name: '17769597'
+            widget: string
+          - hint: 'Original text: BRAND COLOR 1, key: -d27f125'
+            label: Text
+            name: '-d27f125'
+            widget: string
+          - hint: 'Original text: #3898ec, key: -6a4ed23b'
+            label: Text
+            name: '-6a4ed23b'
+            widget: string
+          - hint: 'Original text: BRAND COLOR 3, key: -d27f123'
+            label: Text
+            name: '-d27f123'
+            widget: string
+          - hint: 'Original text: #63ecc0, key: -65621c95'
+            label: Text
+            name: '-65621c95'
+            widget: string
+          - hint: 'Original text: BRAND COLOR 2, key: -d27f124'
+            label: Text
+            name: '-d27f124'
+            widget: string
+          - hint: 'Original text: #c860db, key: -1867afb0'
+            label: Text
+            name: '-1867afb0'
+            widget: string
+          - hint: 'Original text: BRAND COLOR 4, key: -d27f122'
+            label: Text
+            name: '-d27f122'
+            widget: string
+          - hint: 'Original text: #ffb08b, key: -10acf1a5'
+            label: Text
+            name: '-10acf1a5'
+            widget: string
+          - hint: 'Original text: Neutral colors, key: -341e9f7'
+            label: Text
+            name: '-341e9f7'
+            widget: string
+          - hint: 'Original text: LIGHT GREY 1, key: 6208159a'
+            label: Text
+            name: 6208159a
+            widget: string
+          - hint: 'Original text: #ebebeb, key: -12980a06'
+            label: Text
+            name: '-12980a06'
+            widget: string
+          - hint: 'Original text: DARK GREY 1, key: -652364e6'
+            label: Text
+            name: '-652364e6'
+            widget: string
+          - hint: 'Original text: #636363, key: -657833a6'
+            label: Text
+            name: '-657833a6'
+            widget: string
+          - hint: 'Original text: LIGHT GREY 2, key: 6208159b'
+            label: Text
+            name: 6208159b
+            widget: string
+          - hint: 'Original text: #cccccc, key: -15f488fd'
+            label: Text
+            name: '-15f488fd'
+            widget: string
+          - hint: 'Original text: DARK GREY 2, key: -652364e5'
+            label: Text
+            name: '-652364e5'
+            widget: string
+          - hint: 'Original text: #333333, key: -6a981afd'
+            label: Text
+            name: '-6a981afd'
+            widget: string
+          - hint: 'Original text: Logo, key: 2439cb'
+            label: Text
+            name: 2439cb
+            widget: string
+          - hint: >-
+              Original text: These are sample logo SVGs that can be downloaded
+              straight from the site, or you could set up a download link that
+              links with the file that's hosted with your cloud storage
+              application of choice., key: 4b2ecdb1
+            label: Text
+            name: 4b2ecdb1
+            widget: text
+          - hint: 'Original text: MAIN LOGO BLACK, key: -3d1060f'
+            label: Text
+            name: '-3d1060f'
+            widget: string
+          - hint: 'Original text: DOWNLOAD, key: -7c3f4778'
+            label: Text
+            name: '-7c3f4778'
+            widget: string
+          - hint: 'Original text: MAIN LOGO WHITE, key: -2aac9e5'
+            label: Text
+            name: '-2aac9e5'
+            widget: string
+          - hint: 'Original text: Components, key: 5c265f36'
+            label: Text
+            name: 5c265f36
+            widget: string
+          - hint: 'Original text: These are a few example components., key: -2b23c4ee'
+            label: Text
+            name: '-2b23c4ee'
+            widget: string
+          - hint: 'Original text: Name, key: 24eeab'
+            label: Text
+            name: 24eeab
+            widget: string
+          - hint: 'Original text: Email, key: 3ff5b7c'
+            label: Text
+            name: 3ff5b7c
+            widget: string
+          - hint: 'Original text: Message, key: -63dc6819'
+            label: Text
+            name: '-63dc6819'
+            widget: string
+          - hint: >-
+              Original text: Oops! Something went wrong while submitting the
+              form, key: 14c5a3a7
+            label: Text
+            name: 14c5a3a7
+            widget: string
+          - hint: 'Original text: Tab 1, key: 4cd4246'
+            label: Text
+            name: 4cd4246
+            widget: string
+          - hint: 'Original text: Tab 2, key: 4cd4247'
+            label: Text
+            name: 4cd4247
+            widget: string
+          - hint: 'Original text: Tab 3, key: 4cd4248'
+            label: Text
+            name: 4cd4248
+            widget: string
+          - hint: 'Original text: Heading, key: -6d5fea1e'
+            label: Text
+            name: '-6d5fea1e'
+            widget: string
+          - hint: >-
+              Original text: Lorem ipsum dolor sit amet, consectetur adipiscing
+              elit. Suspendisse varius enim in eros elementum tristique., key:
+              6f9475d5
+            label: Text
+            name: 6f9475d5
+            widget: text
+          - hint: 'Original text: Flex Columns, key: 641616b6'
+            label: Text
+            name: 641616b6
+            widget: string
+          - hint: 'Original text: pop up modal, key: 3103b5d7'
+            label: Text
+            name: 3103b5d7
+            widget: string
+          - hint: 'Original text: Open Pop Up, key: 20107180'
+            label: Text
+            name: '20107180'
+            widget: string
+          - hint: 'Original text: Wide Container, key: 3ddddf74'
+            label: Text
+            name: 3ddddf74
+            widget: string
+          - hint: 'Original text: Twist-n-Grip, key: -59b76d09'
+            label: Text
+            name: '-59b76d09'
+            widget: string
+          - hint: >-
+              Original text: GENERAL Terms, TERMS of Service, SUPPLY and Privacy
+              Policy, key: -50f95418
+            label: Text
+            name: '-50f95418'
+            widget: string
+          - hint: 'Original text: 2. General Terms, key: -165a06d5'
+            label: Text
+            name: '-165a06d5'
+            widget: string
+          - hint: 'Original text: By accessing the website at , key: -f2b2672'
+            label: Text
+            name: '-f2b2672'
+            widget: string
+          - hint: 'Original text: https://twistngrip.co.nz, key: -5e2c10d8'
+            label: Text
+            name: '-5e2c10d8'
+            widget: string
+          - hint: >-
+              Original text: , you are agreeing to be bound by these terms of
+              service, all applicable laws and regulations, and agree that you
+              are responsible for compliance with any applicable local laws. If
+              you do not agree with any of these terms, you are prohibited from
+              using or accessing this site. The materials contained in this
+              website are protected by applicable copyright and trademark law.,
+              key: 14efff08
+            label: Text
+            name: 14efff08
+            widget: text
+          - hint: 'Original text: 3. Use Licence, key: -19d551cd'
+            label: Text
+            name: '-19d551cd'
+            widget: string
+          - hint: >-
+              Original text: Permission is granted to temporarily download one
+              copy of the materials (information or software) on Twist-n-Grip's
+              website for personal, non-commercial transitory viewing only. This
+              is the grant of a license, not a transfer of title, and under this
+              license you may not:, key: -116a33cc
+            label: Text
+            name: '-116a33cc'
+            widget: text
+          - hint: 'Original text: modify or copy the materials;, key: -303efaee'
+            label: Text
+            name: '-303efaee'
+            widget: string
+          - hint: >-
+              Original text: use the materials for any commercial purpose, or
+              for any public display (commercial or non-commercial);, key:
+              4562645b
+            label: Text
+            name: 4562645b
+            widget: text
+          - hint: >-
+              Original text: attempt to decompile or reverse engineer any
+              software contained on Twist-n-Grip's website;, key: -6bf6a648
+            label: Text
+            name: '-6bf6a648'
+            widget: string
+          - hint: >-
+              Original text: remove any copyright or other proprietary notations
+              from the materials; or, key: -676b4fbd
+            label: Text
+            name: '-676b4fbd'
+            widget: string
+          - hint: >-
+              Original text: transfer the materials to another person or
+              "mirror" the materials on any other server., key: 6c71b2c
+            label: Text
+            name: 6c71b2c
+            widget: string
+          - hint: >-
+              Original text: This license shall automatically terminate if you
+              violate any of these restrictions and may be terminated by
+              Twist-n-Grip at any time. Upon terminating your viewing of these
+              materials or upon the termination of this license, you must
+              destroy any downloaded materials in your possession whether in
+              electronic or printed format., key: -5de7dd31
+            label: Text
+            name: '-5de7dd31'
+            widget: text
+          - hint: 'Original text: 4. Disclaimer, key: 1b6b321'
+            label: Text
+            name: 1b6b321
+            widget: string
+          - hint: >-
+              Original text: The materials on Twist-n-Grip's website are
+              provided on an 'as is' basis. Twist-n-Grip makes no warranties,
+              expressed or implied, and hereby disclaims and negates all other
+              warranties including, without limitation, implied warranties or
+              conditions of merchantability, fitness for a particular purpose,
+              or non-infringement of intellectual property or other violation of
+              rights., key: ef0be3
+            label: Text
+            name: ef0be3
+            widget: text
+          - hint: >-
+              Original text: Further, Twist-n-Grip does not warrant or make any
+              representations concerning the accuracy, likely results, or
+              reliability of the use of the materials on its website or
+              otherwise relating to such materials or on any sites linked to
+              this site., key: -f189449
+            label: Text
+            name: '-f189449'
+            widget: text
+          - hint: 'Original text: 5. Limitations, key: 5b9ab472'
+            label: Text
+            name: 5b9ab472
+            widget: string
+          - hint: >-
+              Original text: In no event shall Twist-n-Grip or its suppliers be
+              liable for any damages (including, without limitation, damages for
+              loss of data or profit, or due to business interruption) arising
+              out of the use or inability to use the materials on Twist-n-Grip
+              website, even if Twist-n-Grip or a Twist-n-Grip authorized
+              representative has been notified orally or in writing of the
+              possibility of such damage. Because some jurisdictions do not
+              allow limitations on implied warranties, or limitations of
+              liability for consequential or incidental damages, these
+              limitations may not apply to you., key: -f75ff7a
+            label: Text
+            name: '-f75ff7a'
+            widget: text
+          - hint: 'Original text: 6. Accuracy of Materials, key: -3b60abe'
+            label: Text
+            name: '-3b60abe'
+            widget: string
+          - hint: >-
+              Original text: The materials appearing on Twist-n-Grip's website
+              could include technical, typographical, or photographic errors.
+              Twist-n-Grip does not warrant that any of the materials on its
+              website are accurate, complete or current. Twist-n-Grip may make
+              changes to the materials contained on its website at any time
+              without notice. However Twist-n-Grip does not make any commitment
+              to update the materials., key: 14ec48c7
+            label: Text
+            name: 14ec48c7
+            widget: text
+          - hint: 'Original text: 7. Links, key: dbabd10'
+            label: Text
+            name: dbabd10
+            widget: string
+          - hint: >-
+              Original text: Twist-n-Grip has not reviewed all of the sites
+              linked to its website and is not responsible for the contents of
+              any such linked site. The inclusion of any link does not imply
+              endorsement by Twist-n-Grip of the site. Use of any such linked
+              website is at the user's own risk., key: 4d9fc16c
+            label: Text
+            name: 4d9fc16c
+            widget: text
+          - hint: 'Original text: 8. Modifications, key: -8499973'
+            label: Text
+            name: '-8499973'
+            widget: string
+          - hint: >-
+              Original text: Twist-n-Grip may revise these terms of service for
+              its website at any time without notice. By using this website you
+              are agreeing to be bound by the then current version of these
+              terms of service., key: 9eb8770
+            label: Text
+            name: 9eb8770
+            widget: text
+          - hint: 'Original text: 9. Governing Law, key: 367b7ce6'
+            label: Text
+            name: 367b7ce6
+            widget: string
+          - hint: >-
+              Original text: These terms and conditions are governed by and
+              construed in accordance with the laws of Wellington, New Zealand
+              and you irrevocably submit to the exclusive jurisdiction of the
+              courts in that State or location., key: fbb0341
+            label: Text
+            name: fbb0341
+            widget: text
+          - hint: 'Original text: Privacy Policy, key: -3fbde6f6'
+            label: Text
+            name: '-3fbde6f6'
+            widget: string
+          - hint: >-
+              Original text: Your privacy is important to us. It is
+              Twist-n-Grip's policy to respect your privacy regarding any
+              information we may collect from you across our website, , key:
+              8727231
+            label: Text
+            name: '8727231'
+            widget: text
+          - hint: >-
+              Original text: , and other sites we own and operate., key:
+              -4b6698a2
+            label: Text
+            name: '-4b6698a2'
+            widget: string
+          - hint: 'Original text: Information We Collect, key: 63d0ad6c'
+            label: Text
+            name: 63d0ad6c
+            widget: string
+          - hint: 'Original text: Log Data:, key: -6de3964c'
+            label: Text
+            name: '-6de3964c'
+            widget: string
+          - hint: >-
+              Original text:  When you visit our website, our servers may
+              automatically log the standard data provided by your web browser.
+              This data is considered “non-identifying information”, as it does
+              not personally identify you on its own. It may include your
+              computer’s Internet Protocol (IP) address, your browser type and
+              version, the pages you visit, the time and date of your visit, the
+              time spent on each page, and other details., key: -38fd09e7
+            label: Text
+            name: '-38fd09e7'
+            widget: text
+          - hint: >-
+              Original text: We may also collect data about the device you are
+              using to access our website. This data may include the device
+              type, operating system, unique device identifiers, device
+              settings, and geo-location data. What we collect can depend on the
+              individual settings of your device and software. We recommend
+              checking the policies of your device manufacturer or software
+              provider to learn what information they make available to us.,
+              key: 56fce5b9
+            label: Text
+            name: 56fce5b9
+            widget: text
+          - hint: 'Original text: Personal Information: , key: -4a46d88e'
+            label: Text
+            name: '-4a46d88e'
+            widget: string
+          - hint: >-
+              Original text: We may ask for personal information, such as your:,
+              key: 61a41f07
+            label: Text
+            name: 61a41f07
+            widget: string
+          - hint: 'Original text: Social Media Profiles, key: -6016fa27'
+            label: Text
+            name: '-6016fa27'
+            widget: string
+          - hint: 'Original text: Date of Birth, key: -ed72d8'
+            label: Text
+            name: '-ed72d8'
+            widget: string
+          - hint: 'Original text: Phone/Mobile Number, key: -1789da7a'
+            label: Text
+            name: '-1789da7a'
+            widget: string
+          - hint: 'Original text: Home/Mailing Address, key: -441f89b1'
+            label: Text
+            name: '-441f89b1'
+            widget: string
+          - hint: 'Original text: Work Address, key: 8cd49e5'
+            label: Text
+            name: 8cd49e5
+            widget: string
+          - hint: 'Original text: Payment Information, key: 4f1be9d2'
+            label: Text
+            name: 4f1be9d2
+            widget: string
+          - hint: >-
+              Original text: This data is considered “identifying information”,
+              as it can personally identify you. We only request personal
+              information relevant to providing you with a service, and only use
+              it to help provide or improve this service., key: -17ada33e
+            label: Text
+            name: '-17ada33e'
+            widget: text
+          - hint: 'Original text: How We Collect Information, key: -2c47134c'
+            label: Text
+            name: '-2c47134c'
+            widget: string
+          - hint: >-
+              Original text: : We collect information by fair and lawful means,
+              with your knowledge and consent. We also let you know why we’re
+              collecting it and how it will be used. You are free to refuse our
+              request for this information, with the understanding that we may
+              be unable to provide you with some of your desired services
+              without it., key: 7b7dee1f
+            label: Text
+            name: 7b7dee1f
+            widget: text
+          - hint: 'Original text: Use of information, key: 1da2c43c'
+            label: Text
+            name: 1da2c43c
+            widget: string
+          - hint: >-
+              Original text: : We may use a combination of identifying and
+              non-identifying information to understand who our visitors are,
+              how they use our services, and how we may improve their experience
+              of our website in future. We do not disclose the specifics of this
+              information publicly, but may share aggregated and anonymised
+              versions of this information, for example, in website and customer
+              usage trend reports., key: 523ca935
+            label: Text
+            name: 523ca935
+            widget: text
+          - hint: >-
+              Original text: We may use your personal details to contact you
+              with updates about our website and services, along with
+              promotional content that we believe may be of interest to you. If
+              you wish to opt out of receiving promotional content, you can
+              follow the “unsubscribe” instructions provided alongside any
+              promotional correspondence from us., key: 16644cba
+            label: Text
+            name: 16644cba
+            widget: text
+          - hint: 'Original text: Data processing and storage, key: -2f607745'
+            label: Text
+            name: '-2f607745'
+            widget: string
+          - hint: >-
+              Original text: : The personal information we collect is stored and
+              processed in New Zealand, or where we or our partners, affiliates
+              and third-party providers maintain facilities. We only transfer
+              data within jurisdictions subject to data protection laws that
+              reflect our commitment to protecting the privacy of our users.,
+              key: 1bfc7522
+            label: Text
+            name: 1bfc7522
+            widget: text
+          - hint: >-
+              Original text: We only retain personal information for as long as
+              necessary to provide a service, or to improve our services in
+              future. While we retain this data, we will protect it within
+              commercially acceptable means to prevent loss and theft, as well
+              as unauthorised access, disclosure, copying, use or modification.
+              That said, we advise that no method of electronic transmission or
+              storage is 100% secure, and cannot guarantee absolute data
+              security., key: -b1788c
+            label: Text
+            name: '-b1788c'
+            widget: text
+          - hint: >-
+              Original text: If you request your personal information be
+              deleted, or where your personal information becomes no longer
+              relevant to our operations, we will erase it from our system
+              within a reasonable timeframe., key: eb844f
+            label: Text
+            name: eb844f
+            widget: text
+          - hint: 'Original text: ‍, key: 200d'
+            label: Text
+            name: 200d
+            widget: string
+          - hint: >-
+              Original text: Cookie and Third Party Services Policy, key:
+              -11c3f0a4
+            label: Text
+            name: '-11c3f0a4'
+            widget: string
+          - hint: 'Original text: Cookies, key: -64062591'
+            label: Text
+            name: '-64062591'
+            widget: string
+          - hint: >-
+              Original text: : We use cookies to help improve your experience of
+              , key: 27199348
+            label: Text
+            name: '27199348'
+            widget: string
+          - hint: >-
+              Original text: . This cookie policy is part of Firstfruits
+              Webdesign Ltd's privacy policy, and covers the use of cookies
+              between your device and our site. We also provide basic
+              information on third-party services we may use, who may also use
+              cookies as part of their service, though they are not covered by
+              our policy., key: -16919ace
+            label: Text
+            name: '-16919ace'
+            widget: text
+          - hint: >-
+              Original text: If you don’t wish to accept cookies from us, you
+              should instruct your browser to refuse cookies from , key:
+              5a748904
+            label: Text
+            name: 5a748904
+            widget: text
+          - hint: >-
+              Original text: , with the understanding that we may be unable to
+              provide you with some of your desired content and services., key:
+              85e5b74
+            label: Text
+            name: 85e5b74
+            widget: text
+          - hint: >-
+              Original text: We use “cookies” to collect information about you
+              and your activity across our site. A cookie is a small piece of
+              data that our website stores on your computer, and accesses each
+              time you visit, so we can understand how you use our site. This
+              helps us serve you content based on preferences you have
+              specified. Please refer to our Cookie Policy for more
+              information., key: -41a9b4eb
+            label: Text
+            name: '-41a9b4eb'
+            widget: text
+          - hint: 'Original text: What is a Cookie?, key: -642b323e'
+            label: Text
+            name: '-642b323e'
+            widget: string
+          - hint: >-
+              Original text: : A cookie is a small piece of data that a website
+              stores on your device when you visit, typically containing
+              information about the website itself, a unique identifier that
+              allows the site to recognise your web browser when you return,
+              additional data that serves the purpose of the cookie, and the
+              lifespan of the cookie itself., key: 12273826
+            label: Text
+            name: '12273826'
+            widget: text
+          - hint: >-
+              Original text: Cookies are used to enable certain features (eg.
+              logging in), to track site usage (eg. analytics), to store your
+              user settings (eg. timezone, notification preferences), and to
+              personalise your content (eg. advertising, language).Cookies set
+              by the website you are visiting are normally referred to as
+              “first-party cookies”, and typically only track your activity on
+              that particular site. , key: 4b4536d9
+            label: Text
+            name: 4b4536d9
+            widget: text
+          - hint: >-
+              Original text: Cookies set by other sites and companies (ie. third
+              parties) are called “third-party cookies”, and can be used to
+              track you on other websites that use the same third-party
+              service., key: -25ba56da
+            label: Text
+            name: '-25ba56da'
+            widget: text
+          - hint: >-
+              Original text: Types of cookies and how we use them, key:
+              -103b3b25
+            label: Text
+            name: '-103b3b25'
+            widget: string
+          - hint: 'Original text:  :, key: 41a'
+            label: Text
+            name: 41a
+            widget: string
+          - hint: 'Original text: Essential cookies :, key: 1148f477'
+            label: Text
+            name: 1148f477
+            widget: string
+          - hint: >-
+              Original text:  Essential cookies are crucial to your experience
+              of a website, enabling core features like user logins, account
+              management, shopping carts and payment processing. We use
+              essential cookies to enable certain functions on our website.,
+              key: adbbdd3
+            label: Text
+            name: adbbdd3
+            widget: text
+          - hint: 'Original text: Performance cookies :, key: 499ae6d9'
+            label: Text
+            name: 499ae6d9
+            widget: string
+          - hint: >-
+              Original text:  Performance cookies are used in the tracking of
+              how you use a website during your visit, without collecting
+              personal information about you. Typically, this information is
+              anonymous and aggregated with information tracked across all site
+              users, to help companies understand visitor usage patterns,
+              identify and diagnose problems or errors their users may
+              encounter, and make better strategic decisions in improving their
+              audience’s overall website experience. These cookies may be set by
+              the website you’re visiting (first-party) or by third-party
+              services. We use performance cookies on our site., key: -50d3a3b3
+            label: Text
+            name: '-50d3a3b3'
+            widget: text
+          - hint: 'Original text: Functionality cookies :, key: 160ea4b4'
+            label: Text
+            name: 160ea4b4
+            widget: string
+          - hint: >-
+              Original text:  Functionality cookies are used in collecting
+              information about your device and any settings you may configure
+              on the website you’re visiting (like language and timezone
+              settings). With this information, websites can provide you with
+              customised, enhanced or optimised content and services. These
+              cookies may be set by the website you’re visiting (first-party) or
+              by third-party service. We use functionality cookies for selected
+              features on our site., key: 1294a3c7
+            label: Text
+            name: 1294a3c7
+            widget: text
+          - hint: 'Original text: Targeting/advertising cookies :, key: -68b02211'
+            label: Text
+            name: '-68b02211'
+            widget: string
+          - hint: >-
+              Original text:  Targeting/advertising cookies are used in
+              determining what promotional content is more relevant and
+              appropriate to you and your interests. Websites may use them to
+              deliver targeted advertising or to limit the number of times you
+              see an advertisement. This helps companies improve the
+              effectiveness of their campaigns and the quality of content
+              presented to you. These cookies may be set by the website you’re
+              visiting (first-party) or by third-party services.
+              Targeting/advertising cookies set by third-parties may be used to
+              track you on other websites that use the same third-party service.
+              We use targeting/advertising cookies on our site which include but
+              not limited to the Google Enhanced Demographics and Interests
+              Reporting platform, key: 26cd1975
+            label: Text
+            name: 26cd1975
+            widget: text
+          - hint: 'Original text: Third-party cookies on our site :, key: -5248bf3b'
+            label: Text
+            name: '-5248bf3b'
+            widget: string
+          - hint: >-
+              Original text:  We may employ third-party companies and
+              individuals on our websites—for example, analytics providers and
+              content partners. We grant these third parties access to selected
+              information to perform specific tasks on our behalf. They may also
+              set third-party cookies in order to deliver the services they are
+              providing. Third-party cookies can be used to track you on other
+              websites that use the same third-party service. As we have no
+              control over third-party cookies, they are not covered by
+              Firstfruits Webdesign Ltd's cookie policy., key: 2eb16e77
+            label: Text
+            name: 2eb16e77
+            widget: text
+          - hint: 'Original text: Our third-party privacy promise :, key: -271b7b37'
+            label: Text
+            name: '-271b7b37'
+            widget: string
+          - hint: >-
+              Original text:  We review the privacy policies of all our
+              third-party providers before enlisting their services to ensure
+              their practices align with ours. We will never knowingly include
+              third-party services that compromise or violate the privacy of our
+              users., key: 5474083c
+            label: Text
+            name: 5474083c
+            widget: text
+          - hint: >-
+              Original text: How you can control or opt out of cookies : , key:
+              -1108ab8
+            label: Text
+            name: '-1108ab8'
+            widget: string
+          - hint: >-
+              Original text: If you do not wish to accept cookies from us, you
+              can instruct your browser to refuse cookies from our website. Most
+              browsers are configured to accept cookies by default, but you can
+              update these settings to either refuse cookies altogether, or to
+              notify you when a website is trying to set or update a cookie. If
+              you browse websites from multiple devices, you may need to update
+              your settings on each individual device. Although some cookies can
+              be blocked with little impact on your experience of a website,
+              blocking all cookies may mean you are unable to access certain
+              features and content across the sites you visit., key: a408eea
+            label: Text
+            name: a408eea
+            widget: text
+          - hint: 'Original text: Third-party access to information, key: 18ff4c03'
+            label: Text
+            name: 18ff4c03
+            widget: string
+          - hint: 'Original text: : We use third-party services for:, key: 5bf50e0e'
+            label: Text
+            name: 5bf50e0e
+            widget: string
+          - hint: 'Original text: Analytics tracking, key: 15a4b631'
+            label: Text
+            name: 15a4b631
+            widget: string
+          - hint: 'Original text: User authentication, key: 3229974d'
+            label: Text
+            name: 3229974d
+            widget: string
+          - hint: 'Original text: Advertising and promotion, key: 1691957e'
+            label: Text
+            name: 1691957e
+            widget: string
+          - hint: 'Original text: Content marketing, key: 10a8df1f'
+            label: Text
+            name: 10a8df1f
+            widget: string
+          - hint: 'Original text: Email marketing, key: d161e82'
+            label: Text
+            name: d161e82
+            widget: string
+          - hint: 'Original text: Payment processing, key: -56a14e73'
+            label: Text
+            name: '-56a14e73'
+            widget: string
+          - hint: >-
+              Original text: These services may access our data solely for the
+              purpose of performing specific tasks on our behalf. We do not
+              share any personally identifying information with them without
+              your explicit consent. We do not give them permission to disclose
+              or use any of our data for any other purpose., key: -7d6ac9d
+            label: Text
+            name: '-7d6ac9d'
+            widget: text
+          - hint: >-
+              Original text: We may, from time to time, allow limited access to
+              our data by external consultants and agencies for the purpose of
+              analysis and service improvement. This access is only permitted
+              for as long as necessary to perform a specific function. We only
+              work with external agencies whose privacy policies align with
+              ours., key: 228391df
+            label: Text
+            name: 228391df
+            widget: text
+          - hint: >-
+              Original text: We will refuse government and law enforcement
+              requests for data if we believe a request is too broad or
+              unrelated to its stated purpose. However, we may cooperate if we
+              believe the requested information is necessary and appropriate to
+              comply with legal process, to protect our own rights and property,
+              to protect the safety of the public and any person, to prevent a
+              crime, or to prevent what we reasonably believe to be illegal,
+              legally actionable, or unethical activity., key: -5236f3fa
+            label: Text
+            name: '-5236f3fa'
+            widget: text
+          - hint: >-
+              Original text: We do not otherwise share or supply personal
+              information to third parties. We do not sell or rent your personal
+              information to marketers or third parties., key: 5065f8f9
+            label: Text
+            name: 5065f8f9
+            widget: text
+          - hint: 'Original text: Children''s Privacy Policy, key: 6ed8be3f'
+            label: Text
+            name: 6ed8be3f
+            widget: string
+          - hint: >-
+              Original text: We are committed to protecting the privacy of
+              children who use , key: -6cc6d47c
+            label: Text
+            name: '-6cc6d47c'
+            widget: string
+          - hint: >-
+              Original text:  and its services. We encourage parents to engage
+              with us in protecting their children’s privacy, ensuring a safe
+              and enjoyable online experience., key: 73681384
+            label: Text
+            name: '73681384'
+            widget: text
+          - hint: >-
+              Original text: This children’s privacy policy is part of our
+              approach to privacy, and covers the way we collect, store and
+              manage information provided by children under the age of 13, in
+              accordance with the US Children’s Online Privacy Protection Act
+              (COPPA)., key: -31c75c52
+            label: Text
+            name: '-31c75c52'
+            widget: text
+          - hint: 'Original text: Collecting information from children, key: 9a7b239'
+            label: Text
+            name: 9a7b239
+            widget: string
+          - hint: >-
+              Original text: : At times, we may require information from
+              children to enable participation in certain activities, for
+              example, registering an account, customising a profile, or
+              receiving notifications. When collecting non-personal information,
+              we encourage children never to provide any details that may
+              personally identify them or reveal their location. We do not
+              require children to provide more information than is necessary to
+              participate in an activity., key: -28aaef62
+            label: Text
+            name: '-28aaef62'
+            widget: text
+          - hint: >-
+              Original text: We do not use children’s contact details for
+              marketing purposes, though we may use them for our internal
+              marketing and research in order to improve the quality of products
+              and services offered across our site., key: -56d1666a
+            label: Text
+            name: '-56d1666a'
+            widget: text
+          - hint: 'Original text: Parental consent, key: 4fb30d6f'
+            label: Text
+            name: 4fb30d6f
+            widget: string
+          - hint: >-
+              Original text: : In accordance with COPPA, if an activity does
+              require any personal information (such as first name, last name,
+              or email address), we will provide notice to and seek consent from
+              a parent or guardian prior to collecting the information. We only
+              retain collected information for as long as necessary to enable
+              participation in the requested activity., key: 24d22397
+            label: Text
+            name: 24d22397
+            widget: text
+          - hint: >-
+              Original text: In the event we discover we have collected personal
+              information in a manner non-compliant with COPPA, we will either
+              delete the information or seek parental consent., key: ae771c0
+            label: Text
+            name: ae771c0
+            widget: text
+          - hint: >-
+              Original text: As a parent/guardian, if you believe your child is
+              participating in an activity that collects personal information,
+              and you have not received a notification or request for consent,
+              please feel free to get in touch via our contact page , key:
+              -2af293f1
+            label: Text
+            name: '-2af293f1'
+            widget: text
+          - hint: >-
+              Original text: . We do not use parent contact details for
+              marketing purposes unless marketing materials are explicitly
+              requested., key: 60875a78
+            label: Text
+            name: 60875a78
+            widget: text
+          - hint: 'Original text: Safeguarding children’s privacy, key: 6a1b8237'
+            label: Text
+            name: 6a1b8237
+            widget: string
+          - hint: >-
+              Original text: : We take security seriously, and do what we can
+              within commercially acceptable means to protect your child’s
+              personal information from loss or theft, as well as unauthorised
+              access, disclosure, copying, use or modification. That said, we
+              advise that no method of electronic transmission or storage is
+              100% secure, and cannot guarantee absolute data security., key:
+              -465efb65
+            label: Text
+            name: '-465efb65'
+            widget: text
+          - hint: >-
+              Original text: Information abuse and community misconduct, key:
+              50c2fcfb
+            label: Text
+            name: 50c2fcfb
+            widget: string
+          - hint: >-
+              Original text: : We do not tolerate doxing (publishing of private
+              or personal information about an individual without their
+              consent), cyberbullying, or other forms of information abuse on ,
+              key: 5fcf050a
+            label: Text
+            name: 5fcf050a
+            widget: text
+          - hint: 'Original text: ., key: 2e'
+            label: Text
+            name: 2e
+            widget: string
+          - hint: >-
+              Original text: If we discover that a child’s personal information
+              has been disclosed on our site without the express consent of
+              their parent/guardian, we will remove the content in question as
+              quickly as possible and effect disciplinary measures (a warning,
+              suspension or ban) on the offending account., key: -2d89d6fa
+            label: Text
+            name: '-2d89d6fa'
+            widget: text
+          - hint: >-
+              Original text: : We do not knowingly disclose any personally
+              identifying information or personal information provided by
+              children to third parties. We may, however, disclose anonymised
+              and aggregated versions of this information (analytics and
+              statistics) for business, marketing or public relations purposes.,
+              key: -13cb13b5
+            label: Text
+            name: '-13cb13b5'
+            widget: text
+          - hint: 'Original text: Parental controls and intervention, key: -72dc5741'
+            label: Text
+            name: '-72dc5741'
+            widget: string
+          - hint: >-
+              Original text: : As a parent/guardian, you may at any time refuse
+              to let us collect further information from your children for a
+              particular activity or account. If you have given us consent
+              previously, you may log in to your child’s account to review, edit
+              or delete the information, or contact us via to request the
+              removal of the information from our records., key: 404cf366
+            label: Text
+            name: 404cf366
+            widget: text
+          - hint: >-
+              Original text: Please be aware that the removal of certain
+              information may result in the termination of the associated
+              account, or withdrawal from the associated activity., key:
+              303adbc3
+            label: Text
+            name: 303adbc3
+            widget: text
+          - hint: 'Original text: Limits Of Our Policy, key: -6e489f59'
+            label: Text
+            name: '-6e489f59'
+            widget: string
+          - hint: >-
+              Original text: This privacy policy only covers Firstfruits
+              Webdesign Ltd's own collecting and handling of data. We only work
+              with partners, affiliates and third-party providers whose privacy
+              policies align with ours, however we cannot accept responsibility
+              or liability for their respective privacy practices. Our website
+              may link to external sites that are not operated by us. Please be
+              aware that we have no control over the content and policies of
+              those sites, and cannot accept responsibility or liability for
+              their respective privacy practices., key: -3477d366
+            label: Text
+            name: '-3477d366'
+            widget: text
+          - hint: 'Original text: Changes to this policy, key: 3bbeddec'
+            label: Text
+            name: 3bbeddec
+            widget: string
+          - hint: >-
+              Original text: : At our discretion, we may change our privacy
+              policy to reflect current acceptable practices. We will take
+              reasonable steps to let users know about changes via our website.
+              If you are a registered user on , key: 7824bc3a
+            label: Text
+            name: 7824bc3a
+            widget: text
+          - hint: >-
+              Original text: , we will notify you using the contact details
+              saved in your account. Your continued use of this site after any
+              changes to this policy will be regarded as acceptance of our
+              practices around privacy and personal information., key: 72cdf0c7
+            label: Text
+            name: 72cdf0c7
+            widget: text
+          - hint: 'Original text: Your rights and responsibilities, key: 7accd2b1'
+            label: Text
+            name: 7accd2b1
+            widget: string
+          - hint: >-
+              Original text: : As our user, you have the right to be informed
+              about how your data is collected and used. You are entitled to
+              know what data we collect about you, and how it is processed. You
+              are entitled to correct and update any personal information about
+              you, and to request this information be deleted. You may amend or
+              remove your account information at any time, using the tools
+              provided in your account control panel. You are entitled to
+              restrict or object to our use of your data, while retaining the
+              right to use your personal information for your own purposes. You
+              have the right to opt out of data about you being used in
+              decisions based solely on automated processing., key: 7a2791f
+            label: Text
+            name: 7a2791f
+            widget: text
+          - hint: >-
+              Original text: Feel free to contact us if you have any concerns or
+              questions about how we handle your data and personal information.,
+              key: 6657ff45
+            label: Text
+            name: 6657ff45
+            widget: text
+          - hint: 'Original text: Twist-n-Grip Data Controller, key: -5893ad57'
+            label: Text
+            name: '-5893ad57'
+            widget: string
+          - hint: 'Original text: Stephen Douglas, key: 52af2386'
+            label: Text
+            name: 52af2386
+            widget: string
+          - hint: >-
+              Original text: Twist-n-Grips Data Protection Officer, key:
+              5e272b41
+            label: Text
+            name: 5e272b41
+            widget: string
+          - hint: 'Original text: Terms of Service and Supply, key: 4b9538d3'
+            label: Text
+            name: 4b9538d3
+            widget: string
+          - hint: "Original text: OVERVIEW\_This website is operated by Twist-n-Grip. Throughout the site, the terms “we”, “us” and “our” refer to Twist-n-Grip. Twist-n-Grip offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here., key: 1775460e"
+            label: Text
+            name: 1775460e
+            widget: text
+          - hint: >-
+              Original text: By visiting our site and/ or purchasing something
+              from us, you engage in our “Service” and agree to be bound by the
+              following terms and conditions (“Terms of Service”, “Terms”),
+              including those additional terms and conditions and policies
+              referenced herein and/or available by hyperlink. These Terms of
+              Service apply to all users of the site, including without
+              limitation users who are browsers, vendors, customers, merchants,
+              and/ or contributors of content., key: -2eb81272
+            label: Text
+            name: '-2eb81272'
+            widget: text
+          - hint: >-
+              Original text: Please read these Terms of Service carefully before
+              accessing or using our website. By accessing or using any part of
+              the site, you agree to be bound by these Terms of Service. If you
+              do not agree to all the terms and conditions of this agreement,
+              then you may not access the website or use any services. If these
+              Terms of Service are considered an offer, acceptance is expressly
+              limited to these Terms of Service., key: 7f796ff1
+            label: Text
+            name: 7f796ff1
+            widget: text
+          - hint: >-
+              Original text: Any new features or tools which are added to the
+              current store shall also be subject to the Terms of Service. You
+              can review the most current version of the Terms of Service at any
+              time on this page. We reserve the right to update, change or
+              replace any part of these Terms of Service by posting updates
+              and/or changes to our website. It is your responsibility to check
+              this page periodically for changes. Your continued use of or
+              access to the website following the posting of any changes
+              constitutes acceptance of those changes., key: -4f529c53
+            label: Text
+            name: '-4f529c53'
+            widget: text
+          - hint: 'Original text: SECTION 1 - ONLINE STORE TERMS, key: 277ba218'
+            label: Text
+            name: 277ba218
+            widget: string
+          - hint: "Original text: By agreeing to these Terms of Service, you represent that you are at least the age of majority in your state or province of residence, or that you are the age of majority in your state or province of residence and you have given us your consent to allow any of your minor dependents to use this site.\_You may not use our products for any illegal or unauthorized purpose nor may you, in the use of the Service, violate any laws in your jurisdiction (including but not limited to copyright laws).\_You must not transmit any worms or viruses or any code of a destructive nature.\_A breach or violation of any of the Terms will result in an immediate termination of your Services., key: 6535edf2"
+            label: Text
+            name: 6535edf2
+            widget: text
+          - hint: 'Original text: SECTION 2 - GENERAL CONDITIONS, key: -41bf8d34'
+            label: Text
+            name: '-41bf8d34'
+            widget: string
+          - hint: "Original text: We reserve the right to refuse service to anyone for any reason at any time.\_You understand that your content (not including credit card information), may be transferred unencrypted and involve (a) transmissions over various networks; and (b) changes to conform and adapt to technical requirements of connecting networks or devices. Credit card information is always encrypted during transfer over networks.\_You agree not to reproduce, duplicate, copy, sell, resell or exploit any portion of the Service, use of the Service, or access to the Service or any contact on the website through which the service is provided, without express written permission by us.\_The headings used in this agreement are included for convenience only and will not limit or otherwise affect these Terms., key: 70fe984"
+            label: Text
+            name: 70fe984
+            widget: text
+          - hint: >-
+              Original text: SECTION 3 - ACCURACY, COMPLETENESS AND TIMELINESS
+              OF INFORMATION, key: -24bc38cf
+            label: Text
+            name: '-24bc38cf'
+            widget: string
+          - hint: "Original text: We are not responsible if information made available on this site is not accurate, complete or current. The material on this site is provided for general information only and should not be relied upon or used as the sole basis for making decisions without consulting primary, more accurate, more complete or more timely sources of information. Any reliance on the material on this site is at your own risk.\_This site may contain certain historical information. Historical information, necessarily, is not current and is provided for your reference only. We reserve the right to modify the contents of this site at any time, but we have no obligation to update any information on our site. You agree that it is your responsibility to monitor changes to our site., key: -6a601929"
+            label: Text
+            name: '-6a601929'
+            widget: text
+          - hint: >-
+              Original text: SECTION 4 -MODIFICATIONS TO THE SERVICE AND PRICES,
+              key: 7cea39e3
+            label: Text
+            name: 7cea39e3
+            widget: string
+          - hint: "Original text: Prices for our products are subject to change without notice.\_We reserve the right at any time to modify or discontinue the Service (or any part or content thereof) without notice at any time.\_We shall not be liable to you or to any third-party for any modification, price change, suspension or discontinuance of the Service., key: 74a34657"
+            label: Text
+            name: 74a34657
+            widget: text
+          - hint: >-
+              Original text: SECTION 5 - PRODUCTSOR SERVICES (if applicable),
+              key: 3700d78d
+            label: Text
+            name: 3700d78d
+            widget: string
+          - hint: "Original text: Certain products or services may be available exclusively online through the website. These products or services may have limited quantities and are subject to return or exchange only according to our Return Policy.\_We have made every effort to display as accurately as possible the colours and images of our products that appear at the store. We cannot guarantee that your computer monitor's display of any colour will be accurate. We reserve the right, but are not obligated, to limit the sales of our products or Services to any person, geographic region or jurisdiction. We may exercise this right on a case-by-case basis. We reserve the right to limit the quantities of any products or services that we offer. All descriptions of products or product pricing are subject to change at anytime without notice, at the sole discretion of us. We reserve the right to discontinue any product at any time. Any offer for any product or service made on this site is void where prohibited.\_We do not warrant that the quality of any products, services, information, or other material purchased or obtained by you will meet your expectations, or that any errors in the Service will be corrected., key: -4478ad9e"
+            label: Text
+            name: '-4478ad9e'
+            widget: text
+          - hint: >-
+              Original text: SECTION 6 - ACCURACY OF BILLING AND ACCOUNT
+              INFORMATION, key: 4f66c9d1
+            label: Text
+            name: 4f66c9d1
+            widget: string
+          - hint: "Original text: We reserve the right to refuse any order you place with us. We may, in our sole discretion, limit or cancel quantities purchased per person, per household or per order. These restrictions may include orders placed by or under the same customer account, the same credit card, and/or orders that use the same billing and/or shipping address. In the event that we make a change to or cancel an order, we may attempt to notify you by contacting the e-mail and/or billing address/phone number provided at the time the order was made. We reserve the right to limit or prohibit orders that, in our sole judgment, appear to be placed by dealers, resellers or distributors.\_You agree to provide current, complete and accurate purchase and account information for all purchases made at our store. You agree to promptly update your account and other information, including your email address and credit card numbers and expiration dates, so that we can complete your transactions and contact you as needed.\_For more detail, please review our Returns Policy., key: -29dbee86"
+            label: Text
+            name: '-29dbee86'
+            widget: text
+          - hint: 'Original text: SECTION 7 - OPTIONAL TOOLS, key: 590d9b52'
+            label: Text
+            name: 590d9b52
+            widget: string
+          - hint: "Original text: We may provide you with access to third-party tools over which we neither monitor nor have any control nor input.\_You acknowledge and agree that we provide access to such tools ”as is” and “as available” without any warranties, representations or conditions of any kind and without any endorsement. We shall have no liability whatsoever arising from or relating to your use of optional third-party tools.\_Any use by you of optional tools offered through the site is entirely at your own risk and discretion and you should ensure that you are familiar with and approve of the terms on which tools are provided by the relevant third-party provider(s).\_We may also, in the future, offer new services and/or features through the website (including, the release of new tools and resources). Such new features and/or services shall also be subject to these Terms of Service., key: -7e0e5fbc"
+            label: Text
+            name: '-7e0e5fbc'
+            widget: text
+          - hint: 'Original text: SECTION 8 -THIRD-PARTY LINKS, key: -667d2f1'
+            label: Text
+            name: '-667d2f1'
+            widget: string
+          - hint: "Original text: Certain content, products and services available via our Service may include materials from third-parties.\_Third-party links on this site may direct you to third-party websites that are not affiliated with us. We are not responsible for examining or evaluating the content or accuracy and we do not warrant and will not have any liability or responsibility for any third-party materials or websites, or for any other materials, products, or services of third-parties.\_We are not liable for any harm or damages related to the purchase or use of goods, services, resources, content, or any other transactions made in connection with any third-party websites. Please review carefully the third-party's policies and practices and make sure you understand them before you engage in any transaction. Complaints, claims, concerns, or questions regarding third-party products should be directed to the third-party., key: 24148754"
+            label: Text
+            name: '24148754'
+            widget: text
+          - hint: >-
+              Original text: SECTION 9 - USERCOMMENTS, FEEDBACK AND OTHER
+              SUBMISSIONS, key: 3a85cddb
+            label: Text
+            name: 3a85cddb
+            widget: string
+          - hint: >-
+              Original text: If, at our request, you send certain specific
+              submissions (for example contest entries) or without a request
+              from us you send creative ideas, suggestions, proposals, plans, or
+              other materials, whether online, by email, by postal mail, or
+              otherwise (collectively, 'comments'), you agree that we may, at
+              any time, without restriction, edit, copy, publish, distribute,
+              translate and otherwise use in any medium any comments that you
+              forward to us. We are and shall be under no obligation (1) to
+              maintain any comments in confidence; (2) to pay compensation for
+              any comments; or (3) to respond to any comments. We may, but have
+              no obligation to, monitor, edit or remove content that we
+              determine in our sole discretion are unlawful, offensive,
+              threatening, libelous, defamatory, pornographic, obscene or
+              otherwise objectionable or violates any party’s intellectual
+              property or these Terms of Service. You agree that your comments
+              will not violate any right of any third-party, including
+              copyright, trademark, privacy, personality or other personal or
+              proprietary right. You further agree that your comments will not
+              contain libelous or otherwise unlawful, abusive or obscene
+              material, or contain any computer virus or other malware that
+              could in any way affect the operation of the Service or any
+              related website. You may not use a false e-mail address, pretend
+              to be someone other than yourself, or otherwise mislead us or
+              third-parties as to the origin of any comments. You are solely
+              responsible for any comments you make and their accuracy. We take
+              no responsibility and assume no liability for any comments posted
+              by you or any third-party., key: -4faa410
+            label: Text
+            name: '-4faa410'
+            widget: text
+          - hint: 'Original text: SECTION 10 - PERSONAL INFORMATION, key: a4b6ac5'
+            label: Text
+            name: a4b6ac5
+            widget: string
+          - hint: >-
+              Original text: Your submission of personal information through the
+              store is governed by our Privacy Policy. To view our Privacy
+              Policy., key: -554d1dac
+            label: Text
+            name: '-554d1dac'
+            widget: text
+          - hint: >-
+              Original text: SECTION 11 - ERRORS, INACCURACIES AND OMISSIONS,
+              key: a387d80
+            label: Text
+            name: a387d80
+            widget: string
+          - hint: "Original text: Occasionally there may be information on our site or in the Service that contains typographical errors, inaccuracies or omissions that may relate to product descriptions, pricing, promotions, offers, product shipping charges, transit times and availability. We reserve the right to correct any errors, inaccuracies or omissions, and to change or update information or cancel orders if any information in the Service or on any related website is inaccurate at any time without prior notice (including after you have submitted your order).\_We undertake no obligation to update, amend or clarify information in the Service or on any related website, including without limitation, pricing information, except as required by law. No specified update or refresh date applied in the Service or on any related website, should be taken to indicate that all information in the Service or on any related website has been modified or updated., key: dc758a2"
+            label: Text
+            name: dc758a2
+            widget: text
+          - hint: 'Original text: SECTION 12 -PROHIBITED USES, key: 9cc8a65'
+            label: Text
+            name: 9cc8a65
+            widget: string
+          - hint: >-
+              Original text: In addition to other prohibitions as set forth in
+              the Terms of Service, you are prohibited from using the site or
+              its content:(a) for any unlawful purpose; (b) to solicit others to
+              perform or participate in any unlawful acts;(c) to violate any
+              international, federal, provincial or state regulations, rules,
+              laws, or local ordinances; (d) to infringe upon or violate our
+              intellectual property rights or the intellectual property rights
+              of others; (e)to harass, abuse, insult, harm, defame, slander,
+              disparage, intimidate, or discriminate based on gender, sexual
+              orientation, religion, ethnicity, race, age, national origin, or
+              disability; (f) to submit false or misleading information;(g) to
+              upload or transmit viruses or any other type of malicious code
+              that will or may be used in any way that will affect the
+              functionality or operation of the Service or of any related
+              website, other websites, or the Internet; (h) to collect or track
+              the personal information of others; (i) to spam, phish, pharm,
+              pretext, spider, crawl, or scrape; (j) for any obscene or immoral
+              purpose; or (k) to interfere with or circumvent the security
+              features of the Service or any related website, other websites, or
+              the Internet. We reserve the right to terminate your use of the
+              Service or any related website for violating any of the prohibited
+              uses., key: -25920427
+            label: Text
+            name: '-25920427'
+            widget: text
+          - hint: >-
+              Original text: SECTION 13 -DISCLAIMER OF WARRANTIES; LIMITATION OF
+              LIABILITY, key: -57cc9ea3
+            label: Text
+            name: '-57cc9ea3'
+            widget: string
+          - hint: "Original text: We do not guarantee, represent or warrant that your use of our service will be uninterrupted, timely, secure or error-free.\_We do not warrant that the results that may be obtained from the use of the service will be accurate or reliable.\_You agree that from time to time we may remove the service for indefinite periods of time or cancel the service at any time, without notice to you. You expressly agree that your use of, or inability to use, the service is at your sole risk. The service and all products and services delivered to you through the service are (except as expressly stated by us) provided 'as is' and 'as available' for your use, without any representation, warranties or conditions of any kind, either express or implied, including all implied warranties or conditions of merchantability, merchantable quality, fitness for a particular purpose, durability, title, and non-infringement. In no case shall Twist-n-Grip, our directors, officers, employees, affiliates, agents, contractors, interns, suppliers, service providers or licensors be liable for any injury, loss, claim, or any direct, indirect, incidental, punitive, special, or consequential damages of any kind, including, without limitation lost profits, lost revenue, lost savings, loss of data, replacement costs, or any similar damages, whether based in contract, tort (including negligence), strict liability or otherwise, arising from your use of any of the service or any products procured using the service, or for any other claim related in anyway to your use of the service or any product, including, but not limited to, any errors or omissions in any content, or any loss or damage of any kind incurred as a result of the use of the service or any content (or product) posted, transmitted, or otherwise made available via the service, even if advised of their possibility. Because some states or jurisdictions do not allow the exclusion or the limitation of liability for consequential or incidental damages, in such states or jurisdictions, our liability shall be limited to the maximum extent permitted by law., key: -32502e1b"
+            label: Text
+            name: '-32502e1b'
+            widget: text
+          - hint: 'Original text: SECTION 14 -INDEMNIFICATION, key: 2c2b304c'
+            label: Text
+            name: 2c2b304c
+            widget: string
+          - hint: >-
+              Original text: You agree to indemnify, defend and hold harmless
+              Twist-n-Grip and our parent, subsidiaries, affiliates, partners,
+              officers, directors, agents, contractors, licensors, service
+              providers, subcontractors, suppliers, interns and employees,
+              harmless from any claim or demand, including reasonable attorneys’
+              fees, made by any third-party due to or arising out of your breach
+              of these Terms of Service or the documents they incorporate by
+              reference, or your violation of any law or the rights of a
+              third-party., key: -7abee0ec
+            label: Text
+            name: '-7abee0ec'
+            widget: text
+          - hint: 'Original text: SECTION 15 -SEVERABILITY, key: 4a4b1fa5'
+            label: Text
+            name: 4a4b1fa5
+            widget: string
+          - hint: >-
+              Original text: In the event that any provision of these Terms of
+              Service is determined to be unlawful, void or unenforceable, such
+              provision shall nonetheless be enforceable to the fullest extent
+              permitted by applicable law, and the unenforceable portion shall
+              be deemed to be severed from these Terms of Service, such
+              determination shall not affect the validity and enforceability of
+              any other remaining provisions., key: -6c30cfae
+            label: Text
+            name: '-6c30cfae'
+            widget: text
+          - hint: 'Original text: SECTION 16 -TERMINATION, key: -3dca48a9'
+            label: Text
+            name: '-3dca48a9'
+            widget: string
+          - hint: "Original text: The obligations and liabilities of the parties incurred prior to the termination date shall survive the termination of this agreement for all purposes.\_These Terms of Service are effective unless and until terminated by either you or us. You may terminate these Terms of Service at any time by notifying us that you no longer wish to use our Services, or when you cease using our site. If in our sole judgment you fail, or we suspect that you have failed, to comply with any term or provision of these Terms of Service, we also may terminate this agreement at any time without notice and you will remain liable for all amounts due up to and including the date of termination; and/or accordingly may deny you access to our Services (or any part thereof)., key: -904dba4"
+            label: Text
+            name: '-904dba4'
+            widget: text
+          - hint: 'Original text: SECTION 17 - ENTIRE AGREEMENT, key: -60a49333'
+            label: Text
+            name: '-60a49333'
+            widget: string
+          - hint: "Original text: The failure of us to exercise or enforce any right or provision of these Terms of Service shall not constitute a waiver of such right or provision.\_These Terms of Service and any policies or operating rules posted by us on this site or in respect to The Service constitutes the entire agreement and understanding between you and us and govern your use of the Service, superseding any prior or contemporaneous agreements, communications and proposals, whether oral or written, between you and us (including, but not limited to, any prior versions of the Terms of Service). Any ambiguities in the interpretation of these Terms of Service shall not be construed against the drafting party., key: -568acb97"
+            label: Text
+            name: '-568acb97'
+            widget: text
+          - hint: "Original text: SECTION 18 -GOVERNING LAW\_These Terms of Service and any separate agreements whereby we provide you Services shall be governed by and construed in accordance with the laws of 21 Bell Road, Lower Hutt, 5010, New Zealand., key: 163221d9"
+            label: Text
+            name: 163221d9
+            widget: text
+          - hint: >-
+              Original text: SECTION 19 - CHANGESTO TERMS OF SERVICE, key:
+              4f9ebe97
+            label: Text
+            name: 4f9ebe97
+            widget: string
+          - hint: "Original text: You can review the most current version of the Terms of Service at any time at this page.\_We reserve the right, at our sole discretion, to update, change or replace any part of these Terms of Service by posting updates and changes to our website. It is your responsibility to check our website periodically for changes. Your continued use of or access to our website or the Service following the posting of any changes to these Terms of Service constitutes acceptance of those changes., key: 683078ef"
+            label: Text
+            name: 683078ef
+            widget: text
+          - hint: 'Original text: SECTION 20 - CONTACT INFORMATION, key: 45f41d12'
+            label: Text
+            name: 45f41d12
+            widget: string
+          - hint: >-
+              Original text: Questions about the Terms of Service should be sent
+              to us at twistngrip@twistngrip.co.nz., key: 47b438ac
+            label: Text
+            name: 47b438ac
+            widget: string
+          - hint: >-
+              Original text: This policy is effective as of 20th August 2022.,
+              key: -3479691d
+            label: Text
+            name: '-3479691d'
+            widget: string
+      - label: Links
+        name: links
+        file: cms/_data/links.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Links
+          - hint: 'Original link: #, key: 23'
+            label: Link
+            name: '23'
+            widget: string
+          - hint: 'Original link: tel:+64272762028, key: 4b8a4c26'
+            label: Link
+            name: 4b8a4c26
+            widget: string
+          - hint: 'Original link: https://en.wikipedia.org/wiki/Acetal, key: 32aa1f03'
+            label: Link
+            name: 32aa1f03
+            widget: string
+          - hint: 'Original link: https://www.nzmca.org.nz/, key: -5c63d7dc'
+            label: Link
+            name: '-5c63d7dc'
+            widget: string
+          - hint: 'Original link: /terms/, key: -7e043789'
+            label: Link
+            name: '-7e043789'
+            widget: string
+          - hint: 'Original link: https://firstfruitswebdesign.com, key: 41f3e045'
+            label: Link
+            name: 41f3e045
+            widget: string
+          - hint: 'Original link: /, key: 2f'
+            label: Link
+            name: 2f
+            widget: string
+          - hint: 'Original link: http://firstfruitswebdesign.com, key: -39c2f978'
+            label: Link
+            name: '-39c2f978'
+            widget: string
+          - hint: 'Original link: tel:+64272559435, key: 4815c120'
+            label: Link
+            name: 4815c120
+            widget: string
+      - label: Images
+        name: images
+        file: cms/_data/images.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Images
+          - label: Image
+            name: 5c2f0f5c
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i454c96c2
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 5fdd51fc
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i3f176ef2
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 12568ee
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i5043a56c
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 506a650
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i1ed7bee8
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 588dbb98
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i452379d1
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i1acd54e6
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i5035f21e
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 25a0dbd4
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 3e364e28
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '0'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 549884fc
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-17d38149'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '-5d6f63da'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '362495e1'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+publish_mode: editorial_workflow
