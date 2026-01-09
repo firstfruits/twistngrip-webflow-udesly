@@ -1,10 +1,9 @@
 backend:
   name: git-gateway
-  repo: firstfruits/twistngrip-webflow-udesly
-  branch: master
   accept_roles:
     - admin
     - editor
+  branch: master
 media_folder: theme/assets/images
 public_folder: /assets/images
 collections:
@@ -2264,7 +2263,7 @@ collections:
                 widget: string
                 required: false
           - label: Image
-            name: i3f176ef2
+            name: 18382ba7
             widget: object
             fields:
               - name: url
@@ -2277,7 +2276,7 @@ collections:
                 widget: string
                 required: false
           - label: Image
-            name: 12568ee
+            name: i63b91859
             widget: object
             fields:
               - name: url
@@ -2290,7 +2289,7 @@ collections:
                 widget: string
                 required: false
           - label: Image
-            name: i5043a56c
+            name: i58805799
             widget: object
             fields:
               - name: url
@@ -2303,7 +2302,7 @@ collections:
                 widget: string
                 required: false
           - label: Image
-            name: 506a650
+            name: i42dee819
             widget: object
             fields:
               - name: url
@@ -2316,7 +2315,7 @@ collections:
                 widget: string
                 required: false
           - label: Image
-            name: i1ed7bee8
+            name: i48beff19
             widget: object
             fields:
               - name: url
@@ -2329,7 +2328,7 @@ collections:
                 widget: string
                 required: false
           - label: Image
-            name: 588dbb98
+            name: i636aaf19
             widget: object
             fields:
               - name: url
@@ -2342,7 +2341,7 @@ collections:
                 widget: string
                 required: false
           - label: Image
-            name: i452379d1
+            name: i2f310e39
             widget: object
             fields:
               - name: url
@@ -2368,7 +2367,7 @@ collections:
                 widget: string
                 required: false
           - label: Image
-            name: i5035f21e
+            name: 4d042cd0
             widget: object
             fields:
               - name: url
@@ -2394,7 +2393,7 @@ collections:
                 widget: string
                 required: false
           - label: Image
-            name: 3e364e28
+            name: 187b4edc
             widget: object
             fields:
               - name: url
